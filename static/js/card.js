@@ -1,13 +1,11 @@
 
 var updtBttns= document.getElementsByClassName('update-card');
-console.log(updtBttns.length)
 for(let i =0; i<updtBttns.length; i++){
     updtBttns[i].addEventListener('click', function(){
         var productId=this.dataset.product;
         var action=this.dataset.action;
        console.log('prodId',productId,'action',action,user)
         if(user=='AnonymousUser'){
-            console.log("Not logged in");
             addCookieItem(productId, action);
         }
         else{
@@ -21,7 +19,6 @@ function getCookie(name) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) == (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -30,13 +27,11 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-console.log("csrftoken", csrftoken)
 
 function addCookieItem(productId,action){
     console.log('User did not logged in ........',productId, action);
 
     if (action == 'add'){
-        console.log("cardff",cart)
         if (cart[productId]==undefined){
             cart[productId]={'quantity':1}
         }
@@ -54,12 +49,10 @@ function addCookieItem(productId,action){
     
 
     document.cookie="cart="+JSON.stringify(cart)+";domain=;path=/"
-    console.log(' Bilemiyorum',cart);
     location.reload()
 }
 
 function updateUserOrder(productId, action){
-    console.log("csrf token!", csrftoken);
     var url='/update_Item/';
 
     fetch(url,{
@@ -76,14 +69,12 @@ function updateUserOrder(productId, action){
     }).then((response)=>{
          return response.json();
     }).then((data)=>{
-        console.log('data :', data)
         location.reload()
     })
 }
 
 var bigOne=document.querySelector(".photo_left img");
 var allImages=document.querySelectorAll(".photo_right img");
-console.log("bigOne",bigOne, allImages)
 allImages.forEach(image=>{image.addEventListener('mouseover',()=>{
     console.log("omage:;",bigOne, image.src)
     bigOne.src= image.src

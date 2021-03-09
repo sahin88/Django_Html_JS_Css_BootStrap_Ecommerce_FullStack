@@ -31,12 +31,10 @@ def register(request):
 def get_total(user):
     if user.is_authenticated:
         customer = user.username
-        print(user.id)
         order, created = Order.objects.get_or_create(
             customer_id=user.id, complete=False)
         items = order.orderitem_set.all()
         context = {'items': items, 'orders': order, }
-        print("order.shipping", order.shipping)
     return context
 
 
@@ -75,7 +73,6 @@ def card(request):
 
     else:
         context = nonuser(request)
-        print("context", context)
     return render(request, 'store/Card.html', context)
 
 
@@ -93,11 +90,8 @@ def updateItem(request):
     body = json.loads(request.body)
     productId = body['productId']
     action = body['action']
-
     customer = request.user.username
-    print("customer", customer)
     product = Product.objects.get(id=productId)
-
     order, created = Order.objects.get_or_create(
         customer_id=request.user.id, complete=False)
     orderItem, created = OrderItem.objects.get_or_create(
@@ -107,7 +101,6 @@ def updateItem(request):
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity-1)
     orderItem.save()
-    print(orderItem.quantity)
 
     if orderItem.quantity <= 0:
         orderItem.delete()
@@ -117,17 +110,12 @@ def updateItem(request):
 
 def processOrder(request):
     data = json.loads(request.body)
-    print("data", data)
     transaction_id = datetime.datetime.now().timestamp()
     if request.user.is_authenticated:
         customer = request.user.customer
-        order, created = Order.objects.get_or_create(
-            customer=customer, complete=False)
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
         order.transaction_id = transaction_id
         if "{:.2f}".format(float(data['userFormInfo']['total'])) == "{:.2f}".format(float(order.totalPrice)):
-            print('coming_float', "{:.2f}".format(
-                float(data['userFormInfo']['total'])))
-            print('coming_float', "{:.2f}".format(float(order.totalPrice)))
             order.complete = True
 
         if order.shipping:

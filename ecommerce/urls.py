@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from . import settings
 from django.contrib.auth import views as auth_views
 from store import views as user_views
-from store.models import Product, Order, OrderItem, ShippingAdress  # , Customer
+from store.models import Product, Order, OrderItem, ShippingAdress  
 
 
 urlpatterns = [
