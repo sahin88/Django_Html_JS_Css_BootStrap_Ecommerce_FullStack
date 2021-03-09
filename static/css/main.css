@@ -1,0 +1,165 @@
+body {
+  background-color: hsl(0, 0%, 98%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: hsl(0, 0%, 30%);
+}
+.left_side_nav_bar {
+  display: flex;
+}
+.box-element {
+  box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  -webkit-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+  -moz-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+  box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+}
+
+.product {
+  border-radius: 0 0 4px 4px;
+}
+
+.bg-dark {
+  background-color: #4f868c !important;
+}
+
+#cart-icon {
+  width: 25px;
+  display: inline-block;
+  margin-left: 15px;
+}
+
+#cart-total {
+  display: block;
+  text-align: center;
+  color: #fff;
+  background-color: red;
+  width: 20px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.col-lg-4,
+.col-lg-6,
+.col-lg-8,
+.col-lg-12 {
+  margin-top: 10px;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.table_row_image {
+  width: 100px;
+  transform: scale(0.5);
+}
+
+.form-field {
+  width: 250px;
+  display: inline-block;
+  padding: 5px;
+}
+
+.cart-row {
+  display: flex;
+  align-items: flex-stretch;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+}
+
+.quantity {
+  display: inline-block;
+  font-weight: 700;
+  padding-right: 10px;
+}
+
+.chg-quantity {
+  width: 12px;
+  cursor: pointer;
+  display: block;
+  margin-top: 5px;
+  transition: 0.1s;
+}
+
+.chg-quantity:hover {
+  opacity: 0.6;
+}
+
+.hidden {
+  display: none !important;
+}
+.photo_right {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 30%;
+  margin: 20px;
+}
+.photo_right img {
+  margin-left: 30%;
+  margin-top: 10%;
+  object-fit: scale-down;
+  width: 50%;
+}
+.photo_left {
+  width: 80%;
+  height: auto;
+}
+
+.photo_left img {
+  object-fit: contain;
+  display: block;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto 0 auto;
+}
+.photos_imageview {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 1000px) {
+  .photos_imageview {
+    flex-direction: column;
+  }
+
+  .photo_right {
+    flex-direction: row;
+    width: 100%;
+    margin-left: 0px;
+  }
+  .photo_left {
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .photo_right img {
+    margin-left: 0%;
+    margin-top: 5%;
+    object-fit: contain;
+    width: 20%;
+    height: 100%;
+  }
+  .thumbnail {
+    object-fit: scale-down;
+  }
+}

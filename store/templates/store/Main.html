@@ -1,0 +1,218 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ecommerce</title>
+  <link rel="stylesheet" href='{% static "css/main.css" %}'> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script type='text/javascript'>var user='{{request.user}}';
+
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+if(cart=='undefined'){
+  cart={}
+  console.log('card has been created');
+  document.cookie='cart='+JSON.stringify(cart);+";domain=;path=/"
+
+}
+
+function getToken(name){
+  var cookieArr= document.cookie.split(";");
+  for(let i=0; i<cookieArr.length;i++){
+    var cookiePar=cookieArr[i].split("=");
+    if(name==cookiePar[0].trim()){
+      return decodeURIComponent(cookiePar[1]);
+    }
+  }
+  return null
+}
+
+var cart =JSON.parse(getToken('cart'));
+console.log('cart in main  :',cart)
+
+
+</script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'store' %}"> Sahin Ecommerce</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only"></span></a>
+            </li>
+       
+          </ul>
+
+          <div class="form-inline my-2 my-lg-0  left_side_nav_bar">
+            
+            {% if user.is_authenticated %}
+              <a href="{% url 'logout' %} "class="btn btn-warning">Logout</a>
+              <a href="{% url 'card' %}">
+                <img  id="cart-icon" src="{% static 'images/shopping-cart.png' %}">
+            </a>
+            <p id="cart-total">{{ orders.totalItem }}</p>
+ 
+            {% else %}
+            <a href="{% url 'login' %} "class="btn btn-warning mr-md-3">Login</a>
+            <a href="{% url 'register' %} "class="btn btn-warning">Register</a>
+
+
+            {%endif%}
+           
+       </div>
+         
+        </div>
+
+       
+      </nav>
+     
+
+      
+
+        <div class="container">
+            {% block content %}
+            
+
+            {% endblock content %}
+
+        </div>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'js/card.js' %}">
+  
+  </script>
+  <script type="text/javascript">
+     var shipping='{{ orders.shipping }}';
+    var total='{{orders.totalPrice|floatformat:2}}'
+    if (shipping==='False'){
+      document.getElementById('shipping-info').innerHTML='';
+
+    }
+    console.log("mainnn", csrftoken)
+    var form = document.getElementById('form');
+    try{  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    console.log("it okk ...");
+   document.getElementById('form-button').classList.add('hidden');
+    document.getElementById('payment-options').classList.remove('hidden');
+   
+})
+}
+    catch(err){
+      console.log(err)}
+// document.getElementById('make-payment').addEventListener('click',function(){
+//   formSubmitData();
+// })
+
+if(user!='AnonymousUser'){
+  try{document.getElementById('user-info').classList.add('hidden');}
+  catch(err){
+    console.log(err)
+  }
+    
+
+}
+if(user!='AnonymousUser' && shipping ==='False'){
+    document.getElementById('user-info').classList.add('hidden');
+    document.getElementById('form-button').classList.add('hidden');
+    document.getElementById('payment-options').classList.remove('hidden');
+
+}
+
+
+function formSubmitData(){
+
+  var userFormInfo={
+    'name' : null,
+    'email':null,
+    'total':total
+  }
+
+  var shippingFormData={
+    'adress' : null,
+    'city':null,
+    'country':null,
+    'zipcode':null,
+    'state':null,
+  }
+  if(shipping!='False'){
+    shippingFormData.adress=form.adress.value;
+    shippingFormData.city=form.city.value;
+    shippingFormData.country=form.country.value;
+    shippingFormData.zipcode=form.zipcode.value;
+    shippingFormData.state=form.state.value;
+   
+  }
+
+  if(user == 'AnonymousUser'){
+    userFormInfo.name= form.name.value;
+    userFormInfo.email=form.email.value;
+}
+
+var url='/process_order/'
+fetch(url,{
+  method:'POST',
+  headers:{
+    'Content-Type':'application/json',
+    'X-CSRFToken':csrftoken,},
+  body:JSON.stringify({'userFormInfo':userFormInfo,'shippingFormData':shippingFormData,}),
+}).
+then(
+  (response)=> {console.log(response.json())})
+  .then(
+    (data)=>{
+    alert("Transaction has been completed");
+    window.location.href="{% url 'store' %}";
+});
+}
+</script>
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

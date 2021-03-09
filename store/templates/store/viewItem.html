@@ -1,0 +1,63 @@
+
+{% extends 'store/Main.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="box-element">
+            <hr>
+                <h6><strong>{{product.name}}</strong></h6>
+            <hr>
+            <h6><strong>Image:</strong></h6>
+                <img class="thumbnail" style="width: 30%;"  src='{{product.imageUrl}}'/>
+            <hr>
+            
+                <h6><strong>Price:</strong></h6>
+                <h6>{{product.price}} $</h6>
+               
+            <hr>
+
+            <h6><strong>Description:</strong></h6>
+            <h6>{{product.description}} </h6>
+            <hr>
+        
+            <h6><strong>Photos:</strong></h6>
+            <div class="photos_imageview">
+            <div class="photo_left">
+                <img src='{{product.photo_1.url}}'>
+
+            </div>
+            <div class="photo_right">
+                <img src='{{product.photo_1.url}}'>
+                <img src='{{product.photo_2.url}}'>
+                <img src='{{product.photo_3.url}}'>
+                <img src='{{product.photo_4.url}}'>
+                <img src='{{product.photo_5.url}}'>
+
+            </div>
+        </div>
+             <hr>
+          
+
+            <hr>
+            <!-- <div class="box-element product">
+               
+                <button data-action="add" data-product= "{{product.id}}" class="btn btn-outline-secondary add-btn update-card">Add to Card</button>
+                <a href="{% url 'card_view' product.id %}" class="btn btn-outline-success">View</a>
+                <h4 style=" float: right;">{{ product.price|floatformat:2 }} €</h4>
+            
+            </div> -->
+            </div>  
+        </div>
+       
+    </div>
+    <script>
+  
+    </script>
+
+    
+{% endblock content %}
