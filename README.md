@@ -1,6 +1,6 @@
 # DJango_Html_JS_Css_BootStrap_Ecommerce
 
-## Live Demo [to see leve demo please click](https://ecommerce-webapp-sahin.herokuapp.com)
+## Live Demo [to see live demo please click](https://ecommerce-webapp-sahin.herokuapp.com)
 
 
 ## Features
