@@ -11,7 +11,7 @@
   -  User registration, logging
   -  Custom User Model
 
-## Uml 
+## Entity Relationship Diagram 
 ![alt text](https://github.com/sahin88/DJango_Html_JS_Css_BootStrap_Ecommerce/blob/main/ecommerce_uml.png)
 
 
